@@ -1,0 +1,1 @@
+Second way to exit is to press 'ESC' then type ':' and write w in order to save the file. And to exit vim just restart the computer.

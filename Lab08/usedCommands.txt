@@ -1,0 +1,8 @@
+w - saving the file
+q - quiting the file
+yy - used for copying the line
+x or wq - saving before quitting (I personaly use 'x' because easier to type)
+gg=G - I use it for coding in C++ code. Will format and auto indent it for you.
+dd - deleting the line.
+
+https://vim.rtorr.com/
